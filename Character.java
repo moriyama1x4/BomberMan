@@ -1,20 +1,17 @@
-import java.util.ArrayList;
-
 public class Character {
-	private int color, id, direction,bombRemain;
-	private int[] position;
+	private int color, id, direction, bombRemain, posX, posY;
 	private int bombPower = 2;
 	private int bombQuantity = 2;
 	private int maxBombPower = 9;
 	private int maxBombQuantity = 9;
 	private boolean alive = true;
-	private int[] action = {0,0};
 
-	Character(int color, int id, int[] position, int direction){
-		//マップ更新
+
+	Character(int color, int id, int posX, int posY, int direction){
 		this.color = color;
 		this.id = id;
-		this.position = position;
+		this.posX = posX;
+		this.posY = posY;
 		this.direction = direction;
 		this.bombRemain = this.bombQuantity;
 	}
@@ -27,8 +24,12 @@ public class Character {
 		return this.color;
 	}
 
-	public int[] getPosition() {
-		return this.position;
+	public int getPosX() {
+		return this.posX;
+	}
+
+	public int getPosY() {
+		return this.posY;
 	}
 
 	public int getDirection() {
@@ -59,45 +60,33 @@ public class Character {
 		return this.alive;
 	}
 
-	public int[] getAction() {
-		return this.action;
+	public void setDirection(int ctrMove) {
+		this.direction = ctrMove;
 	}
 
-	public boolean judgeMove(){
-		return true; //マップ未作成なので仮
-	}
+	public void move(int ctrMove) {
+		this.setDirection(ctrMove);
 
-	public void move() {
-		this.direction = action[0];
-
-		if(this.judgeMove()){
-			switch(this.action[0]){
+		switch(ctrMove){
 			case 1:
-				//マップ更新
-				this.position[1]++;
+				this.posY++;
 				break;
 			case 2:
-				//マップ更新
-				this.position[1]--;
+				this.posY--;
 				break;
 			case 3:
-				//マップ更新
-				this.position[0]--;
+				this.posX--;
 				break;
 			case 4:
-				//マップ更新
-				this.position[0]++;
-			}
+				this.posX++;
 		}
 	}
 
-	public boolean judgePutBomb() {
-		return true; //マップ未作成なので仮
+	public Bomb putBomb() {
+		return new Bomb(this.posX, this.posY, this.bombPower, this.id);
 	}
 
-	public void putBomb(ArrayList<Bomb> bombList) {
-		if(this.judgePutBomb()) {
-			bombList.add(new Bomb(1,this.position,this.bombPower,this.id)); // ボムIDに渡し方不明
-		}
+	public void bombed() {
+		this.alive = false;
 	}
 }
