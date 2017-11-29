@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿import java.util.Random;
-=======
 import java.util.Random;
->>>>>>> origin/master
 public class Block {
 	private int posX, posY;
 	private boolean itemDrop = false;;
@@ -26,16 +22,15 @@ public class Block {
 		return this.posY;
 	}
 
-<<<<<<< HEAD
 	public boolean getItemDrop(){
 		return this.itemDrop;
-=======
+	}
+
 	public Item bombed(){
 		if(itemDrop) {
 			return new Item(this.posX, this.posY);
 		}else {
 			return null;
 		}
->>>>>>> origin/master
 	}
 }

@@ -1,9 +1,5 @@
 public class Character {
-<<<<<<< HEAD
-	private int color, id, direction, bombRemain, posX, posY;
-=======
-	private int id, color, direction, bombRemain, posX, posY;
->>>>>>> origin/master
+	private int id, direction, bombRemain, posX, posY;
 	private int bombPower = 2;
 	private int bombQuantity = 2;
 	private int maxBombPower = 9;
@@ -11,15 +7,8 @@ public class Character {
 	private boolean alive = true;
 
 
-<<<<<<< HEAD
-	Character(int color, int id, int posX, int posY, int direction){
-		this.color = color;
+	Character(int id, int posX, int posY, int direction){
 		this.id = id;
-=======
-	Character(int id, int color, int posX, int posY, int direction){
-		this.id = id;
-		this.color = color;
->>>>>>> origin/master
 		this.posX = posX;
 		this.posY = posY;
 		this.direction = direction;
@@ -28,10 +17,6 @@ public class Character {
 
 	public int getId() {
 		return this.id;
-	}
-
-	public int getColor() {
-		return this.color;
 	}
 
 	public int getPosX() {
@@ -92,11 +77,34 @@ public class Character {
 		}
 	}
 
-	public Bomb putBomb() {
-		return new Bomb(this.posX, this.posY, this.bombPower, this.id);
+	public boolean putBomb() {
+		if(this.bombQuantity >= 1) {
+			this.bombQuantity--;
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public void pickBomb() {
+		this.bombQuantity++;
 	}
 
 	public void bombed() {
 		this.alive = false;
+	}
+
+	public void enhance(int itemType) {
+		switch(itemType) {
+			case 1:
+				if(this.bombPower < this.maxBombPower) {
+					this.bombPower++;
+				}
+				break;
+			case 2:
+			if(this.bombQuantity < this.maxBombQuantity) {
+				this.bombQuantity++;
+			}
+		}
 	}
 }
