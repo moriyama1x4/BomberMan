@@ -6,12 +6,18 @@ public class Controller {
 	HashMap<Integer, Integer> itemMap = new HashMap<Integer, Integer>();
 	HashMap<Integer, Integer> characterMap = new HashMap<Integer, Integer>();
 	HashMap<Integer, Integer> bombMap = new HashMap<Integer, Integer>();
+<<<<<<< HEAD
+	HashMap<Integer, Integer> clastMap = new HashMap<Integer, Integer>();
+=======
 	HashMap<Integer, Integer> blastMap = new HashMap<Integer, Integer>();
+>>>>>>> origin/master
 	ArrayList<Block> blockList = new ArrayList<Block>();
 	ArrayList<Item> itemList = new ArrayList<Item>();
 	ArrayList<Character> characterList = new ArrayList<Character>();
 	ArrayList<Bomb> bombList = new ArrayList<Bomb>();
 	ArrayList<Blast> blastList = new ArrayList<Blast>();
+<<<<<<< HEAD
+=======
 	Stage stage = new Stage(9, 13);
 	Ai Ai1 = new Ai(1);
     Ai Ai2 = new Ai(2);
@@ -144,6 +150,7 @@ public class Controller {
 	public void blastBlock(Block block) {
 
 	}
+>>>>>>> origin/master
 
 
 }

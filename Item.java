@@ -8,7 +8,11 @@ public class Item {
 		this.posY = posY;
 
 		Random rnd = new Random();
+<<<<<<< HEAD
+        this.type = rnd.nextInt(2);
+=======
 		this.type = rnd.nextInt(2);
+>>>>>>> origin/master
 	}
 
 	public int getPosX() {

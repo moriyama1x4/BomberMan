@@ -1,5 +1,9 @@
 public class Character {
+<<<<<<< HEAD
+	private int color, id, direction, bombRemain, posX, posY;
+=======
 	private int id, color, direction, bombRemain, posX, posY;
+>>>>>>> origin/master
 	private int bombPower = 2;
 	private int bombQuantity = 2;
 	private int maxBombPower = 9;
@@ -7,9 +11,15 @@ public class Character {
 	private boolean alive = true;
 
 
+<<<<<<< HEAD
+	Character(int color, int id, int posX, int posY, int direction){
+		this.color = color;
+		this.id = id;
+=======
 	Character(int id, int color, int posX, int posY, int direction){
 		this.id = id;
 		this.color = color;
+>>>>>>> origin/master
 		this.posX = posX;
 		this.posY = posY;
 		this.direction = direction;

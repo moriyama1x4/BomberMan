@@ -1,4 +1,4 @@
-
+﻿
 public class Bomb {
 	private int posX, posY, characterId, power;
 	private int liveTime = 7;
