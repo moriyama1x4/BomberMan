@@ -1,6 +1,5 @@
 ﻿
 public class Ai {
-<<<<<<< HEAD
   private int id;
   private int ctrMove = 0;
   private boolean ctrBomb = false;
@@ -34,11 +33,4 @@ public class Ai {
   	this.ctrBomb = false;
   }
 
-=======
-  int id;
-  
-  Ai(int id){
-    this.id = id;
-  }
->>>>>>> origin/master
 }

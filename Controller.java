@@ -214,7 +214,7 @@ public class Controller {
     }
   }
 
-	public void passTimeBomb(int index) {
+	public void timePassBomb(int index) {
 		if(bombList.get(index).passTime()) {
 			blastBomb(index);
 		}
@@ -315,16 +315,31 @@ public class Controller {
     }
   }
 
+  public boolean judgeGameContinue() {
+  	int aliveCharacter = 0;
+  	for(int i = 0; i < characterList.size(); i++) {
+  		if(characterList.get(i).getAlive()) {
+  			aliveCharacter++;
+  		}
+  	}
+
+  	if(this.limitTime > 0 && aliveCharacter >= 2) {
+  		return true;
+  	}else {
+  		return false;
+  	}
+  }
+
   public void timePass(){
     draw();
     clearBlast();
 
     for(int i = 0; i < characterList.size(); i++) {
-
+    	action(characterList.get(i));
     }
 
     for(int i = 0; i < bombList.size(); i++){
-      passTimeBomb(i);
+      timePassBomb(i);
     }
 
    for(int i = 0; i < blastList.size(); i++){
@@ -339,4 +354,17 @@ public class Controller {
       pickItem(i);
     }
   }
+
+  public void setAiCtrMove(int ctrMove, int id) {
+  	for(int i = 0; i < aiList.size(); i++) {
+  		aiList.get(i).setCtrMove(ctrMove);
+  	}
+  }
+
+  public void setAiCtrMove(boolean ctrBomb, int id) {
+  	for(int i = 0; i < aiList.size(); i++) {
+  		aiList.get(i).setCtrBomb(ctrBomb);
+  	}
+  }
+
 }
