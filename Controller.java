@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller {
-  private int limitTime = 1000;
+  private int limitTime = 50;
 	private HashMap<Integer, Integer> bombMap = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> blockMap = new HashMap<Integer, Integer>();
 	private HashMap<Integer, Integer> itemMap = new HashMap<Integer, Integer>();
@@ -63,6 +63,7 @@ public class Controller {
     //間藤頼む
   }
 
+
   public void clearBlast(){
     for(int i = 0; i <= ((stage.getWidth() - 1) + (stage.getWidth() * (stage.getHeight() - 1))); i++){
       blastMap.put(i, null);
@@ -70,6 +71,8 @@ public class Controller {
     blastList.clear();
   }
 
+
+  //キャラ行動ここから
 	public boolean judgeMove(Character character, int ctrMove){
 		int posX = character.getPosX();
 		int posY = character.getPosY();
@@ -118,6 +121,25 @@ public class Controller {
 		}
 	}
 
+	public void action(Character character) {
+  	int ctrMove = 0;
+  	boolean ctrBomb = false;
+
+  	for(int i = 0; i < aiList.size(); i++) {
+  		Ai ai = aiList.get(i);
+  		if(ai.getId() == character.getId()) {
+  			ctrMove = ai.getCtrMove();
+  			ctrBomb = ai.getCtrBomb();
+  		}
+  	}
+  	move(character, ctrMove);
+  	putBomb(character, ctrBomb);
+	}
+//キャラ行動ここまで
+
+
+
+//ボム爆発ここから
 	public int judgeCreateBlast(int posX, int posY) {
 		if(posX >= 0 && posX < stage.getWidth() && posY >= 0 && posY < stage.getHeight() && (posX % 2 == 0 || posY % 2 == 0)) {
 			return 1;
@@ -135,34 +157,20 @@ public class Controller {
 		blastMap.put(cnvMapKey(posX, posY), 1);
 	}
 
-	public void action(Character character) {
-  	int ctrMove = 0;
-  	boolean ctrBomb = false;
 
-  	for(int i = 0; i < aiList.size(); i++) {
-  		Ai ai = aiList.get(i);
-  		if(ai.getId() == character.getId()) {
-  			ctrMove = ai.getCtrMove();
-  			ctrBomb = ai.getCtrBomb();
-  		}
-  	}
-  	move(character, ctrMove);
-  	putBomb(character, ctrBomb);
-
-	}
 
 	public void blastBomb(int index) {
     Bomb bomb = bombList.get(index);
 		int posX = bomb.getPosX();
 		int posY = bomb.getPosY();
 		int characterId = bomb.getCharacterId();
-		createBlast(posX, posY);
+		createBlast(posX, posY);//検討
 
 		for(int i = 1; i <= 4; i++) {
 			int posX2 = posX;
 			int posY2 = posY;
 
-			for (int j = 1; j <= bomb.getPower(); j++) {
+			for (int j = 1; j <= bomb.getPower(); j++) { //cssにあわせて時計回り
 				switch(i) {
 					case 1:
 						posY2++;
@@ -177,7 +185,7 @@ public class Controller {
 						posX2++;
 				}
 
-				if(judgeCreateBlast(posX2, posY2) == 1) {
+				if(judgeCreateBlast(posX2, posY2) == 1) { //judgeCreateBlast１kainimatomeru ]
 					break;
 				}else if(judgeCreateBlast(posX2, posY2) == 2) {
 					createBlast(posX2, posY2);
@@ -200,25 +208,30 @@ public class Controller {
 		}
 	}
 
-  public void blastBombList(Blast blast){
-    int posX = blast.getPosX();
-    int posY = blast.getPosY();
-    if(bombMap.get(cnvMapKey(posX, posY)) == 1){
-      for(int j = 0; j < bombList.size(); j++){
-        Bomb bomb = bombList.get(j);
-        if(bomb.getPosX() == posX && bomb.getPosY() == posY){
-          blastBomb(j);
-          return;
-        }
-      }
-    }
-  }
-
 	public void timePassBomb(int index) {
 		if(bombList.get(index).passTime()) {
 			blastBomb(index);
 		}
 	}
+	//ボム爆発ここまで
+
+
+	//爆破ここから
+
+	 public void blastBombList(Blast blast){
+	    int posX = blast.getPosX();
+	    int posY = blast.getPosY();
+	    if(bombMap.get(cnvMapKey(posX, posY)) == 1){
+	      for(int j = 0; j < bombList.size(); j++){
+	        Bomb bomb = bombList.get(j);
+	        if(bomb.getPosX() == posX && bomb.getPosY() == posY){
+	          blastBomb(j);
+	          return;
+	        }
+	      }
+	    }
+	  }
+
 
 	public void blastBlock(int index) {
 	    Block block = blockList.get(index);
@@ -279,6 +292,7 @@ public class Controller {
     }else{
       characterMap.put(cnvMapKey(posX, posY), null);
     }
+    //キャラクタのaliveをfalseにする
 	}
 
   public void blastCharacterList(Blast blast){
@@ -293,10 +307,9 @@ public class Controller {
       }
     }
   }
+//爆破ここまで
 
-  public void enhanceCharacter(Character character, int itemType){
-    character.enhance(itemType);
-  }
+//アイテム取得ここから
 
   public void pickItem(int index){
     Item item = itemList.get(index);
@@ -307,13 +320,15 @@ public class Controller {
       for(int i = 0; i < characterList.size(); i++){
         Character character = characterList.get(i);
         if(character.getPosX() == posX && character.getPosY() == posY){
-          enhanceCharacter(character, item.getType());
+          character.enhance(item.getType());
         }
       }
       itemMap.put(cnvMapKey(posX, posY), null);
       itemList.remove(index);
     }
   }
+
+//アイテム取得ここまで
 
   public boolean judgeGameContinue() {
   	int aliveCharacter = 0;
@@ -329,6 +344,7 @@ public class Controller {
   		return false;
   	}
   }
+
 
   public void timePass(){
     draw();
@@ -353,7 +369,17 @@ public class Controller {
     for(int i = 0; i < itemList.size(); i++){
       pickItem(i);
     }
+
+    this.limitTime--;
   }
+
+
+
+
+
+
+
+
 
   public void setAiCtrMove(int ctrMove, int id) {
   	for(int i = 0; i < aiList.size(); i++) {

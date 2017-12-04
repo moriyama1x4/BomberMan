@@ -26,11 +26,11 @@ public class Block {
 		return this.itemDrop;
 	}
 
-	public Item bombed(){
+	public boolean bombed(){
 		if(itemDrop) {
-			return new Item(this.posX, this.posY);
+			return true;
 		}else {
-			return null;
+			return false;
 		}
 	}
 }

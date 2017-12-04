@@ -62,7 +62,7 @@ public class Character {
 	public void move(int ctrMove) {
 		this.setDirection(ctrMove);
 
-		switch(ctrMove){
+		switch(ctrMove){//cssにあわせて時計回り
 			case 1:
 				this.posY++;
 				break;
